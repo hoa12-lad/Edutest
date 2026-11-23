@@ -2,16 +2,23 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>EduTest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_heading or "EduTest" }}</title>
 </head>
 <body>
   <nav>
-    <a href="/">Trang chủ</a>
-    {% if user.get("user_id") %}
-      <span>Xin chào, {{ user.get("full_name") }} ({{ user.get("user_role") }})</span>
-      <a href="/logout">Đăng xuất</a>
+    <a href="{{ url_for('home') }}">Trang chủ</a>
+    <a href="{{ url_for('teacher_dashboard') }}">Khu vực GV/Admin</a>
+    <a href="{{ url_for('student_exam') }}">Khu vực Làm bài</a>
+
+    {% if current_user %}
+      <span>
+        Xin chào, <strong>{{ current_user.full_name }}</strong>
+        (<code>{{ current_user.username }}</code> - <strong>{{ current_user.role }}</strong>)
+      </span>
+      <a href="{{ url_for('auth.logout') }}">Đăng xuất</a>
     {% else %}
-      <a href="/login">Đăng nhập</a>
+      <a href="{{ url_for('auth.login') }}">Đăng nhập</a>
     {% endif %}
   </nav>
 
@@ -26,7 +33,8 @@
   {% endwith %}
 
   {% block content %}
-    <h1>EduTest Backend đang chạy</h1>
+    <h1>{{ page_heading or "EduTest" }}</h1>
+    <p>{{ page_message or "" }}</p>
   {% endblock %}
 </body>
 </html>
