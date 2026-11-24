@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Làm bài kiểm tra</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container exam-container">
+        <h1>{{ exam.exam_name }}</h1>
+        <p>Mã sinh viên: {{ student_id }}</p>
+
+        <h2 id="timer" style="color: red;">
+            Đang tải thời gian...
+        </h2>
+
+        <form id="examForm"
+              action="{{ url_for('submit_exam', exam_id=exam.exam_id) }}"
+              method="POST">
+
+            <input type="hidden" name="student_id" value="{{ student_id }}">
+
+            {% for question in questions %}
+                <div class="question">
+                    <h3>
+                        Câu {{ loop.index }}: {{ question.content }}
+                    </h3>
+
+                    {% for letter, option in [
+                        ('A', question.option_a),
+                        ('B', question.option_b),
+                        ('C', question.option_c),
+                        ('D', question.option_d)
+                    ] %}
+                        <label class="option">
+                            <input type="radio"
+                                   name="question_{{ question.question_id }}"
+                                   value="{{ letter }}">
+                            {{ letter }}. {{ option }}
+                        </label>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" id="submitBtn">Nộp bài</button>
+        </form>
+    </div>
+
+    <script>
+        let remaining = Number({{ remaining_seconds }});
+        const timer = document.getElementById("timer");
+        const form = document.getElementById("examForm");
+        const submitBtn = document.getElementById("submitBtn");
+
+        let submitted = false;
+
+        function submitAutomatically() {
+            if (submitted) return;
+
+            submitted = true;
+            timer.textContent = "Đã hết giờ! Đang nộp bài...";
+            submitBtn.disabled = true;
+            form.submit();
+        }
+
+        function updateTimer() {
+            if (remaining <= 0) {
+                submitAutomatically();
+                return;
+            }
+
+            const minutes = Math.floor(remaining / 60);
+            const seconds = remaining % 60;
+
+            timer.textContent =
+                "Thời gian còn lại: " +
+                minutes + ":" + String(seconds).padStart(2, "0");
+
+            remaining--;
+        }
+
+        form.addEventListener("submit", function() {
+            if (submitted) return;
+            submitted = true;
+            submitBtn.disabled = true;
+        });
+
+        updateTimer();
+        const countdown = setInterval(function() {
+            if (submitted) {
+                clearInterval(countdown);
+                return;
+            }
+
+            updateTimer();
+
+            if (remaining <= 0) {
+                clearInterval(countdown);
+                submitAutomatically();
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

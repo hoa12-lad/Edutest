@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduTest - Trang chủ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>EDUTEST</h1>
+        <p>Hệ thống kiểm tra trực tuyến</p>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('start_exam') }}" method="POST">
+            <label>Mã sinh viên</label>
+            <input type="number" name="student_id" required>
+
+            <label>Tên đề thi</label>
+            <input type="text" name="exam_name"
+                   value="Đề kiểm tra Tin học">
+
+            <label>Thời gian làm bài (phút)</label>
+            <input type="number" name="duration"
+                   value="30" min="1" max="180" required>
+
+            <button type="submit">Bắt đầu làm bài</button>
+        </form>
+    </div>
+</body>
+</html>

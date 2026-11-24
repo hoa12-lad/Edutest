@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả kiểm tra</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container result">
+        <h1>KẾT QUẢ BÀI THI</h1>
+
+        <h2>Điểm số: {{ score }}/10</h2>
+
+        <p>Số câu đúng: {{ correct_count }}/{{ total_questions }}</p>
+
+        <p>Mã bài nộp: {{ submission_id }}</p>
+
+        <a href="{{ url_for('home') }}">
+            <button type="button">Về trang chủ</button>
+        </a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f1f4f9;
+    margin: 0;
+    padding: 30px 15px;
+    color: #333;
+}
+
+.container {
+    max-width: 750px;
+    margin: 30px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+}
+
+h1, .result {
+    text-align: center;
+    color: #2457a6;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+input[type="number"],
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 7px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 22px;
+    background: #2457a6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #173e7d;
+}
+
+.message {
+    padding: 12px;
+    margin: 15px 0;
+    background: #fff0d6;
+    border-radius: 6px;
+}
+
+.question {
+    padding: 18px;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.option {
+    display: block;
+    margin: 12px 0;
+    font-weight: normal;
+}
+
+.option input {
+    margin-right: 8px;
+}
+
+#timer {
+    color: #d35400;
+    text-align: right;
+}
+
+.result h2 {
+    color: #16834b;
+}
